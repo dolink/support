@@ -108,7 +108,9 @@ cd ~/setup;
 git checkout master; #this will change once release is finished
 
 # Install Node Packages
+echo -e "\n→ ${bold}Installing dependences of the Setup Repo${normal}\n";
 npm install
 
 # Run install.js
+echo -e "\n→ ${bold}Runnning install.js of the Setup Repo${normal}\n";
 sudo node install.js
