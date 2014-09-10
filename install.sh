@@ -93,6 +93,16 @@ sudo gem install system-getifaddrs  --verbose --no-rdoc --no-ri > /dev/null;
 echo -e "\n→ ${bold}Installing gpac${normal}\n";
 sudo apt-get -qq -y -f -m install gpac > /dev/null;
 
-# Install motion
-echo -e "\n→ ${bold}Installing gpac${normal}\n";
-sudo apt-get -qq -y -f -m install motion > /dev/null;
+###################################################################
+# Glone Setup
+###################################################################
+
+# Create the Dolink setup folder
+echo -e "\n→ ${bold}Create the Dolink Setup Folder${normal}\n";
+sudo mkdir -p  ~/setup;
+
+# Clone the Ninja Utilities into ~/setup
+echo -e "\n→ ${bold}Fetching the Setup Repo from Github${normal}\n";
+git clone https://github.com/dolink/setup.git ~/setup > /dev/null;
+cd ~/setup;
+git checkout master; #this will change once release is finished
