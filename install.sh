@@ -106,3 +106,9 @@ echo -e "\n→ ${bold}Fetching the Setup Repo from Github${normal}\n";
 git clone https://github.com/dolink/setup.git ~/setup > /dev/null;
 cd ~/setup;
 git checkout master; #this will change once release is finished
+
+# Install Node Packages
+npm install
+
+# Run install.js
+sudo node install.js
