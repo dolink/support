@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run this script as root ie:
-# wget -O - https://bitbucket.org/dolink/tools/raw/master/scripts/install.sh | sudo bash
+# wget -O - https://raw.githubusercontent.com/dolink/setup/master/install.sh | sudo bash
 
 set -e
 
