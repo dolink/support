@@ -1,8 +1,9 @@
 "use strict";
 
 var sh = require('shelljs');
-var config = require('shelljs').config;
-config.silent = true;
+sh.config.silent = true;
+
+var config = require('./config');
 
 require('colors');
 
@@ -24,7 +25,7 @@ try {
     process.exit(1);
 }
 
-// clon setup
+// clone setup
 sh.echo('Create the Dolink Setup Folder'.bold);
 sh.rm('-fr', '/opt/setup');
 sh.mkdir('-p', '/opt/setup');
@@ -54,8 +55,20 @@ sh.exec('git clone https://github.com/dolink/agent.git /opt/agent');
 sh.cd('/opt/agent');
 sh.exec('git checkout master');
 
+// Create directory /etc/{project}
+sh.echo("Adding /etc/" + config.project);
+sh.mkdir('-p', '/etc/' + config.project);
+
 // chown opt folder
 sh.echo(('Set ' + user + ' user as the owner of this directory').bold);
 sh.exec('sudo chown -R ' + user + ' /opt/');
+
+// Add /opt/setup/bin to root's path
+sh.echo("Adding /opt/setup/bin to root's path".bold);
+'export PATH=/opt/setup/bin:$PATH'.toEnd('/root/.bashrc');
+
+// Add /opt/setup/bin to user's path
+sh.echo("Adding /opt/setup/bin to ${username}'s path".bold);
+'export PATH=/opt/setup/bin:$PATH'.toEnd('/home/' + user + '/.bashrc');
 
 require('./scripts/' + distributor + '/install');
