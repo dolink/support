@@ -1,5 +1,5 @@
 "use strict";
 
 module.exports = {
-    project: 'dolink'
+    project: 'dobox'
 };

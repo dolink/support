@@ -37,12 +37,12 @@ sh.exec('git checkout master');
 
 // clone dobox
 sh.echo('Create the Dobox Directory'.bold);
-sh.rm('-fr', '/opt/dobox');
-sh.mkdir('-p', '/opt/dobox');
+sh.rm('-fr', '/opt/dmc');
+sh.mkdir('-p', '/opt/dmc');
 
-sh.echo("Clone the Dobox into opt".bold);
-sh.exec('git clone https://github.com/dolink/dobox.git /opt/dobox');
-sh.cd('/opt/dobox');
+sh.echo("Clone the DMC into opt".bold);
+sh.exec('git clone https://github.com/dolink/dmc.git /opt/dmc');
+sh.cd('/opt/dmc');
 sh.exec('git checkout master');
 
 // clone agent
