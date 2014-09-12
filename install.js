@@ -23,6 +23,7 @@ try {
 }
 
 console.log('Create the Dolink Setup Folder'.bold());
+sh.rm('-fr', '/opt/setup');
 sh.mkdir('-p', '/opt/setup');
 
 console.log('Fetching the Setup Repo from Github'.bold());
