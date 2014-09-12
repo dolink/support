@@ -18,7 +18,7 @@ try {
 console.log('Detecting the user'.bold);
 var user = sh.exec('users').output;
 try {
-    user = user.split('\t\r\n');
+    user = user.split('\t\r\n')[0].trim();
 } catch (e) {
     console.error('Can not find the proper user from: ' + user);
     process.exit(1);
