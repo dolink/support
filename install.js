@@ -9,10 +9,6 @@ var utils = require('./lib/utils');
 
 require('colors');
 
-sh.echo('Detecting platform'.bold);
-console.log(platform);
-sh.exit();
-
 sh.echo('Detecting current user'.bold);
 var user = sh.exec('users').output;
 try {

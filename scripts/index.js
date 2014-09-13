@@ -1,3 +1,5 @@
 "use strict";
 
-//exports.sn = require(platform + '/sn');
+var p = require('../lib/platform').product;
+
+exports.sn = require(p + '/sn');
