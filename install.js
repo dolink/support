@@ -1,6 +1,6 @@
 "use strict";
 
-var sh = require('./lib/shells');
+var sh = require('shelljs');
 sh.config.silent = true;
 var ask = require('./lib/ask');
 
@@ -62,20 +62,20 @@ sh.exec('sudo chown -R ' + user + ' /opt/');
 var vars = 'export PATH=/opt/setup/bin:/opt/setup/bin/' + platform + ':$PATH';
 // Add /opt/setup/bin to root's path
 sh.echo("Adding /opt/setup/bin to root's path".bold);
-sh.string(vars).append('/root/.bashrc');
+(vars).toEnd('/root/.bashrc');
 
 // Add /opt/setup/bin to user's path
 sh.echo(("Adding /opt/setup/bin to " + user + "'s path").bold);
-sh.string(vars).append('/home/' + user + '/.bashrc');
+(vars).toEnd('/home/' + user + '/.bashrc');
 
 // Set the box's environment
 sh.echo("Setting the box's environment to stable".bold);
-sh.string('export AGENT_ENV=stable').append('/home/' + user + '/.bashrc');
+('export AGENT_ENV=stable').toEnd('/home/' + user + '/.bashrc');
 
 sh.echo("Generating serial number from system".bold);
 sh.exec("node /opt/setup/bin/"+ platform +"/sn");
 
-sh.string('agent="' + platform + '"').append('/etc/environment.local');
+('agent="' + platform + '"').toEnd('/etc/environment.local');
 
 sh.echo("Setup Successful!".green);
 
