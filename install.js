@@ -52,7 +52,7 @@ sh.cd('/opt/agent');
 sh.exec('git checkout master');
 
 // Create directory /etc/agent
-sh.echo("Adding /etc/agent");
+sh.echo("Adding /etc/agent".bold);
 sh.mkdir('-p', '/etc/agent');
 
 // chown opt folder
@@ -68,21 +68,21 @@ sh.echo(("Adding /opt/setup/bin to " + user + "'s path").bold);
 sh.string('export PATH=/opt/setup/bin:$PATH').append('/home/' + user + '/.bashrc');
 
 // Set the box's environment
-sh.echo("Setting the box's environment to stable");
+sh.echo("Setting the box's environment to stable".bold);
 sh.string('export AGENT_ENV=stable').append('/home/' + user + '/.bashrc');
 
-sh.echo("Generating serial number from system");
+sh.echo("Generating serial number from system".bold);
 sh.exec("bash /opt/setup/bin/"+ platform +"/sn");
 
 sh.string('agent="' + platform + '"').append('/etc/environment.local');
 
-sh.echo("Setup Successful!");
+sh.echo("Setup Successful!".green);
 
-sh.echo("Before you reboot, write down this serial -- this is what you will need to activate your new Pi!");
+sh.echo("Before you reboot, write down this serial -- this is what you will need to activate your new Pi!".bold);
 
 var serial = sh.cat('/etc/agent/serial.conf').trim();
-utils.brand("'Your Pi Serial is: `" + serial + "`'");
+utils.brand("Your Pi Serial is: `" + serial + "`");
 
-ask('When you are ready, please hit the [Enter] key');
+ask('When you are ready, please hit the [Enter] key'.bold);
 
 //require('./scripts/' + distributor + '/install');
