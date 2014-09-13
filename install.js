@@ -1,20 +1,14 @@
 "use strict";
 
-var sh = require('shelljs');
+var sh = require('./lib/shells');
 sh.config.silent = true;
 
-var config = require('./config');
+var platforms = require('./lib/platforms');
 
 require('colors');
 
 sh.echo('Detecting the OS Distributor'.bold);
-var distributor = sh.exec('lsb_release -a | grep Distributor\\ ID').output;
-try {
-    distributor = distributor.split(':')[1].trim().toLowerCase();
-} catch (e) {
-    console.error('Can not recognize OS Distributor: ' + distributor);
-    process.exit(1);
-}
+var platform = platforms.detect();
 
 sh.echo('Detecting the user'.bold);
 var user = sh.exec('users').output;
@@ -55,9 +49,9 @@ sh.exec('git clone https://github.com/dolink/agent.git /opt/agent');
 sh.cd('/opt/agent');
 sh.exec('git checkout master');
 
-// Create directory /etc/{project}
-sh.echo("Adding /etc/" + config.project);
-sh.mkdir('-p', '/etc/' + config.project);
+// Create directory /etc/agent
+sh.echo("Adding /etc/agent");
+sh.mkdir('-p', '/etc/agent');
 
 // chown opt folder
 sh.echo(('Set ' + user + ' user as the owner of this directory').bold);
@@ -65,10 +59,21 @@ sh.exec('sudo chown -R ' + user + ' /opt/');
 
 // Add /opt/setup/bin to root's path
 sh.echo("Adding /opt/setup/bin to root's path".bold);
-'export PATH=/opt/setup/bin:$PATH'.toEnd('/root/.bashrc');
+sh.echo('export PATH=/opt/setup/bin:$PATH').append('/root/.bashrc');
 
 // Add /opt/setup/bin to user's path
-sh.echo("Adding /opt/setup/bin to ${username}'s path".bold);
-'export PATH=/opt/setup/bin:$PATH'.toEnd('/home/' + user + '/.bashrc');
+sh.echo(("Adding /opt/setup/bin to " + user + "'s path").bold);
+sh.echo('export PATH=/opt/setup/bin:$PATH').append('/home/' + user + '/.bashrc');
 
-require('./scripts/' + distributor + '/install');
+// Set the box's environment
+sh.echo("Setting the box's environment to stable");
+sh.echo('export AGENT_ENV=stable').append('/home/' + user + '/.bashrc');
+
+sh.echo("Generating serial number from system");
+sh.exec("bash /opt/setup/bin/"+ platform +"/sn");
+
+sh.echo('agent="' + platform + '"').append('/etc/environment.local');
+
+sh.echo("Setup Successful!");
+
+//require('./scripts/' + distributor + '/install');
