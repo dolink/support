@@ -4,13 +4,14 @@ var sh = require('shelljs');
 sh.config.silent = true;
 var ask = require('./lib/ask');
 var s = require('./scripts');
-var platforms = require('./lib/platforms');
+var platform = require('./lib/platform');
 var utils = require('./lib/utils');
 
 require('colors');
 
 sh.echo('Detecting platform'.bold);
-var platform = platforms.detect();
+sh.echo(platform.product);
+sh.exit();
 
 sh.echo('Detecting current user'.bold);
 var user = sh.exec('users').output;
@@ -59,7 +60,7 @@ sh.mkdir('-p', '/etc/agent');
 sh.echo(('Set ' + user + ' user as the owner of this directory').bold);
 sh.exec('chown -R ' + user + ' /opt/');
 
-var vars = 'export PATH=/opt/setup/bin:/opt/setup/bin/' + platform + ':$PATH\n';
+var vars = 'export PATH=/opt/setup/bin:/opt/setup/bin/' + platform.product + ':$PATH\n';
 // Add /opt/setup/bin to root's path
 sh.echo("Adding /opt/setup/bin to root's path".bold);
 (vars).toEnd('/root/.bashrc');
@@ -73,10 +74,10 @@ sh.echo("Setting the box's environment to stable".bold);
 ('export AGENT_ENV=stable\n').toEnd('/home/' + user + '/.bashrc');
 
 sh.echo("Generating serial number from system".bold);
-sh.exec("node /opt/setup/bin/"+ platform +"/sn");
+sh.exec("node /opt/setup/bin/"+ platform.product +"/sn");
 s.sn();
 
-('agent="' + platform + '"\n').toEnd('/etc/environment.local');
+('platform="' + platform.product + '"\n').toEnd('/etc/environment.local');
 
 sh.echo("Setup Successful!".green);
 
