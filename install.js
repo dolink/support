@@ -85,6 +85,6 @@ sh.echo("|             Your DoPi Serial is: `" + serial + "`          |");
 sh.echo("|                                                            |");
 sh.echo("--------------------------------------------------------------");
 
-sh.exec('read -p " When you are ready, please hit the [Enter] key" nothing');
+sh.exec('read -p " When you are ready, please hit the [Enter] key"');
 
 //require('./scripts/' + distributor + '/install');
