@@ -78,7 +78,7 @@ sh.echo("Setup Successful!");
 
 sh.echo("Before you reboot, write down this serial -- this is what you will need to activate your new Pi!");
 
-var serial = sh.cat('/etc/agent/serial.conf');
+var serial = sh.cat('/etc/agent/serial.conf').trim();
 sh.echo("--------------------------------------------------------------");
 sh.echo("|                                                            |");
 sh.echo("|             Your DoPi Serial is: `" + serial + "`          |");
