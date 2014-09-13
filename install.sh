@@ -114,5 +114,5 @@ echo -e "\n→ ${bold}Installing dependences of the Setup Repo${normal}\n";
 npm install
 
 # Run install.js
-echo -e "\n→ ${bold}Runnning install.js of the Setup Repo${normal}\n";
+echo -e "\n→ ${bold}Setup Dobox ...${normal}\n";
 sudo node install.js
