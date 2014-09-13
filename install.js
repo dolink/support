@@ -59,20 +59,20 @@ sh.exec('sudo chown -R ' + user + ' /opt/');
 
 // Add /opt/setup/bin to root's path
 sh.echo("Adding /opt/setup/bin to root's path".bold);
-sh.echo('export PATH=/opt/setup/bin:$PATH').append('/root/.bashrc');
+sh.string('export PATH=/opt/setup/bin:$PATH').append('/root/.bashrc');
 
 // Add /opt/setup/bin to user's path
 sh.echo(("Adding /opt/setup/bin to " + user + "'s path").bold);
-sh.echo('export PATH=/opt/setup/bin:$PATH').append('/home/' + user + '/.bashrc');
+sh.string('export PATH=/opt/setup/bin:$PATH').append('/home/' + user + '/.bashrc');
 
 // Set the box's environment
 sh.echo("Setting the box's environment to stable");
-sh.echo('export AGENT_ENV=stable').append('/home/' + user + '/.bashrc');
+sh.string('export AGENT_ENV=stable').append('/home/' + user + '/.bashrc');
 
 sh.echo("Generating serial number from system");
 sh.exec("bash /opt/setup/bin/"+ platform +"/sn");
 
-sh.echo('agent="' + platform + '"').append('/etc/environment.local');
+sh.string('agent="' + platform + '"').append('/etc/environment.local');
 
 sh.echo("Setup Successful!");
 
