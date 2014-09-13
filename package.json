@@ -14,6 +14,8 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^0.6.2",
+    "lodash": "^2.4.1",
+    "needs": "^0.1.7",
     "read": "^1.0.5",
     "shelljs": "^0.3.0"
   }

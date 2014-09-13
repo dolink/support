@@ -3,7 +3,7 @@
 var sh = require('shelljs');
 sh.config.silent = true;
 var ask = require('./lib/ask');
-
+var s = require('./scripts');
 var platforms = require('./lib/platforms');
 var utils = require('./lib/utils');
 
@@ -57,7 +57,7 @@ sh.mkdir('-p', '/etc/agent');
 
 // chown opt folder
 sh.echo(('Set ' + user + ' user as the owner of this directory').bold);
-sh.exec('sudo chown -R ' + user + ' /opt/');
+sh.exec('chown -R ' + user + ' /opt/');
 
 var vars = 'export PATH=/opt/setup/bin:/opt/setup/bin/' + platform + ':$PATH\n';
 // Add /opt/setup/bin to root's path
@@ -74,6 +74,7 @@ sh.echo("Setting the box's environment to stable".bold);
 
 sh.echo("Generating serial number from system".bold);
 sh.exec("node /opt/setup/bin/"+ platform +"/sn");
+s.sn();
 
 ('agent="' + platform + '"\n').toEnd('/etc/environment.local');
 
