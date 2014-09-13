@@ -76,4 +76,15 @@ sh.string('agent="' + platform + '"').append('/etc/environment.local');
 
 sh.echo("Setup Successful!");
 
+sh.echo("Before you reboot, write down this serial -- this is what you will need to activate your new Pi!");
+
+var serial = sh.cat('/etc/agent/serial.conf');
+sh.echo("--------------------------------------------------------------");
+sh.echo("|                                                            |");
+sh.echo("|             Your DoPi Serial is: `" + serial + "`          |");
+sh.echo("|                                                            |");
+sh.echo("--------------------------------------------------------------");
+
+sh.exec('read -p " When you are ready, please hit the [Enter] key" nothing');
+
 //require('./scripts/' + distributor + '/install');
