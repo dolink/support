@@ -1,4 +1,4 @@
-Setup
-=====
+Support
+=======
 
-> Linux Setup utilities that support the client (drivers, config script, updates, serial numbers etc).
+> Linux support libraries for the client (drivers, config script, updates, serial numbers etc).
