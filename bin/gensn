@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
-var platform = require('../lib/platform');
+var fs = require('fs');
+var scripts = require('../lib/scripts');
+var argv = require('yargs').argv;
 
-console.log(platform);
+var file = argv._[0] || '/etc/agent/serial.conf';
+
+fs.writeFileSync(file, scripts.sn(), 'utf8');
