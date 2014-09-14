@@ -1,8 +1,8 @@
 {
-  "name": "setup",
+  "name": "support",
   "version": "0.1.0",
   "description": "",
-  "main": "install.js",
+  "main": "setup.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "ssh://git@bitbucket.org/dolink/setup.git"
   },
-  "author": "",
+  "author": "Tao Yuan",
   "license": "MIT",
   "dependencies": {
     "colors": "^0.6.2",
