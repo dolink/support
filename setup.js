@@ -56,13 +56,13 @@ sh.mkdir('-p', '/etc/agent');
 sh.echo(('Set ' + user + ' user as the owner of this directory').bold);
 sh.exec('chown -R ' + user + ' /opt/');
 
-var vars = 'export PATH=/opt/setup/bin:/opt/setup/bin/' + platform + ':$PATH\n';
-// Add /opt/setup/bin to root's path
-sh.echo("Adding /opt/setup/bin to root's path".bold);
+var vars = 'export PATH=/opt/support/bin:/opt/support/bin/' + platform + ':$PATH\n';
+// Add /opt/support/bin to root's path
+sh.echo("Adding /opt/support/bin to root's path".bold);
 (vars).toEnd('/root/.bashrc');
 
-// Add /opt/setup/bin to user's path
-sh.echo(("Adding /opt/setup/bin to " + user + "'s path").bold);
+// Add /opt/support/bin to user's path
+sh.echo(("Adding /opt/support/bin to " + user + "'s path").bold);
 (vars).toEnd('/home/' + user + '/.bashrc');
 
 // Set the box's environment
@@ -70,7 +70,7 @@ sh.echo("Setting the box's environment to stable".bold);
 ('export AGENT_ENV=stable\n').toEnd('/home/' + user + '/.bashrc');
 
 sh.echo("Generating serial number from system".bold);
-sh.exec("node /opt/setup/bin/"+ platform +"/sn");
+sh.exec("node /opt/support/bin/"+ platform +"/sn");
 require('./bin/gensn');
 
 ('platform="' + platform + '"\n').toEnd('/etc/environment.local');
@@ -82,4 +82,4 @@ sh.echo("Before you reboot, write down this serial -- this is what you will need
 var serial = sh.cat('/etc/agent/serial.conf').trim();
 utils.brand("Your Pi Serial is: `" + serial + "`");
 
-read({ prompt: 'When you are ready, please hit the [Enter] key'.bold });
+read({ prompt: 'When you are ready, please hit the [Enter] key'.bold }, function () {});
