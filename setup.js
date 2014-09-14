@@ -1,13 +1,14 @@
 "use strict";
 
 var sh = require('shelljs');
-sh.config.silent = true;
-var ask = require('./lib/ask');
-var s = require('./scripts');
+var read = require('read');
+var scripts = require('./scripts');
 var platform = require('./lib/platform');
 var utils = require('./lib/utils');
 
 require('colors');
+
+sh.config.silent = true;
 
 sh.echo('Detecting current user'.bold);
 var user = sh.exec('users').output;
@@ -71,7 +72,7 @@ sh.echo("Setting the box's environment to stable".bold);
 
 sh.echo("Generating serial number from system".bold);
 sh.exec("node /opt/setup/bin/"+ platform.product +"/sn");
-s.sn();
+scripts.sn();
 
 ('platform="' + platform.product + '"\n').toEnd('/etc/environment.local');
 
@@ -82,4 +83,4 @@ sh.echo("Before you reboot, write down this serial -- this is what you will need
 var serial = sh.cat('/etc/agent/serial.conf').trim();
 utils.brand("Your Pi Serial is: `" + serial + "`");
 
-ask('When you are ready, please hit the [Enter] key'.bold);
+read({ prompt: 'When you are ready, please hit the [Enter] key'.bold });

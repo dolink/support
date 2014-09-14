@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+var platform = require('../lib/platform');
+
+console.log(platform);

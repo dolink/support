@@ -3,8 +3,8 @@
 var p = require('../lib/platform').product;
 
 var path = require('path');
-function plmod(name) {
+function script(name) {
     return require(path.join(__dirname, p, name));
 }
 
-exports.sn = plmod('sn');
+exports.sn = script('sn');
