@@ -99,14 +99,14 @@ sudo apt-get -qq -y -f -m install gpac > /dev/null;
 
 # Create the Dolink support folder
 echo -e "\n→ ${bold}Create the Dolink Setup Folder in /tmp${normal}\n";
-cd /tmp
+cd /opt
 rm -rf support
 sudo mkdir -p  support;
 
 # Clone the Ninja Utilities into ~/support
 echo -e "\n→ ${bold}Fetching the Setup Repo from Github to /tmp/support${normal}\n";
-git clone https://github.com/dolink/support.git /tmp/support > /dev/null;
-cd /tmp/support;
+git clone https://github.com/dolink/support.git /opt/support > /dev/null;
+cd /opt/support;
 git checkout master; #this will change once release is finished
 
 # Install Node Packages
