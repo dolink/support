@@ -3,11 +3,13 @@
 var sh = require('shelljs');
 var ch = require('chalk');
 var read = require('read');
-var util = require('util');
 var platform = require('./lib/platform');
 var utils = require('./lib/utils');
+var Installer = require('./lib/installer');
 
 sh.config.silent = true;
+
+var installer = new Installer({silent: false});
 
 sh.echo(ch.bold('Detecting current user'));
 var user = sh.exec('users').output;
@@ -20,22 +22,24 @@ try {
 
 // Setting the owner of global node_modules to user
 sh.exec('chown -R ' + user + ' /usr/local/lib/node_modules/');
+sh.rm('-fr', '/root/tmp');
 
 // setup support
-sh.echo(ch.bold('Setup `support`'));
-
-sh.echo('   Create the `support` Support Folder');
-sh.rm('-fr', '/opt/support');
-sh.mkdir('-p', '/opt/support');
-//sh.exec('chown -R ' + user + ' /opt/support');
-
-sh.echo('   Fetching the `support` repo from Github');
-sh.exec('git clone https://github.com/dolink/support.git /opt/support ');
-sh.cd('/opt/support');
-sh.exec('git checkout master');
-
-sh.echo("   Installing the `support` repo dependencies");
-sh.exec('npm install');
+installer.install('support');
+//sh.echo(ch.bold('Setup `support`'));
+//
+//sh.echo('   Create the `support` Support Folder');
+//sh.rm('-fr', '/opt/support');
+//sh.mkdir('-p', '/opt/support');
+////sh.exec('chown -R ' + user + ' /opt/support');
+//
+//sh.echo('   Fetching the `support` repo from Github');
+//sh.exec('git clone https://github.com/dolink/support.git /opt/support ');
+//sh.cd('/opt/support');
+//sh.exec('git checkout master');
+//
+//sh.echo("   Installing the `support` repo dependencies");
+//sh.exec('npm install');
 
 // Set the permission of bins to executable
 sh.echo("   Setting the permission of /opt/support/bin to executable");
@@ -45,35 +49,37 @@ bins.forEach(function (bin) {
     sh.chmod('u+x', bin);
 });
 
+installer.install('dmc');
 // setup dmc
-sh.echo(ch.bold('Setup `dmc`'));
-sh.echo('   Create the `dmc` Directory');
-sh.rm('-fr', '/opt/dmc');
-sh.mkdir('-p', '/opt/dmc');
-//sh.exec('chown -R ' + user + ' /opt/dmc');
+//sh.echo(ch.bold('Setup `dmc`'));
+//sh.echo('   Create the `dmc` Directory');
+//sh.rm('-fr', '/opt/dmc');
+//sh.mkdir('-p', '/opt/dmc');
+////sh.exec('chown -R ' + user + ' /opt/dmc');
+//
+//sh.echo("   Fetching the `dmc` repo from Github");
+//sh.exec('git clone https://github.com/dolink/dmc.git /opt/dmc');
+//sh.cd('/opt/dmc');
+//sh.exec('git checkout master');
+//
+//sh.echo("   Installing the `dmc` repo dependencies");
+//sh.exec('npm install');
 
-sh.echo("   Fetching the `dmc` repo from Github");
-sh.exec('git clone https://github.com/dolink/dmc.git /opt/dmc');
-sh.cd('/opt/dmc');
-sh.exec('git checkout master');
-
-sh.echo("   Installing the `dmc` repo dependencies");
-sh.exec('npm install');
-
+installer.install('agent');
 // setup agent
-sh.echo(ch.bold('Setup `agent`'));
-sh.echo('   Create the `agent` Directory');
-sh.rm('-fr', '/opt/agent');
-sh.mkdir('-p', '/opt/agent');
-//sh.exec('chown -R ' + user + ' /opt/agent');
-
-sh.echo("   Fetching the `agent` repo from Github");
-sh.exec('git clone https://github.com/dolink/agent.git /opt/agent');
-sh.cd('/opt/agent');
-sh.exec('git checkout master');
-
-sh.echo("   Installing the `agent` repo dependencies");
-sh.exec('bash ./bin/install.sh', {silent: false});
+//sh.echo(ch.bold('Setup `agent`'));
+//sh.echo('   Create the `agent` Directory');
+//sh.rm('-fr', '/opt/agent');
+//sh.mkdir('-p', '/opt/agent');
+////sh.exec('chown -R ' + user + ' /opt/agent');
+//
+//sh.echo("   Fetching the `agent` repo from Github");
+//sh.exec('git clone https://github.com/dolink/agent.git /opt/agent');
+//sh.cd('/opt/agent');
+//sh.exec('git checkout master');
+//
+//sh.echo("   Installing the `agent` repo dependencies");
+//sh.exec('bash ./bin/install.sh', {silent: false});
 
 // Create directory /etc/agent
 sh.echo(ch.bold("Adding /etc/agent"));
@@ -82,8 +88,6 @@ sh.mkdir('-p', '/etc/agent');
 // chown opt folder
 sh.echo(ch.bold('Set `' + user + '` user as the owner of this directory'));
 sh.exec('chown -R ' + user + ' /opt/');
-
-//var check = sh.grep('/opt/support/bin', '/root/.bashrc');
 
 var env = 'export PATH=/opt/support/bin:$PATH\n';
 // Add /opt/support/bin to root's path
