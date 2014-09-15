@@ -18,14 +18,14 @@ try {
     process.exit(1);
 }
 
-// clone setup
+// clone support
 sh.echo('Create the Dolink Setup Folder'.bold);
-sh.rm('-fr', '/opt/setup');
-sh.mkdir('-p', '/opt/setup');
+sh.rm('-fr', '/opt/support');
+sh.mkdir('-p', '/opt/support');
 
 sh.echo('Fetching the Setup Repo from Github'.bold);
-sh.exec('git clone https://github.com/dolink/setup.git /opt/setup ');
-sh.cd('/opt/setup');
+sh.exec('git clone https://github.com/dolink/support.git /opt/support ');
+sh.cd('/opt/support');
 sh.exec('git checkout master');
 
 // clone dobox
@@ -53,10 +53,16 @@ sh.echo("Adding /etc/agent".bold);
 sh.mkdir('-p', '/etc/agent');
 
 // chown opt folder
-sh.echo(('Set ' + user + ' user as the owner of this directory').bold);
+sh.echo(('Set `' + user + '` user as the owner of this directory').bold);
 sh.exec('chown -R ' + user + ' /opt/');
 
-var vars = 'export PATH=/opt/support/bin:/opt/support/bin/' + platform + ':$PATH\n';
+// chmod bins
+var bins = sh.ls('./bin');
+bins.forEach(function (bin) {
+    sh.chmod('u+x', bin);
+});
+
+var vars = 'export PATH=/opt/support/bin\n';
 // Add /opt/support/bin to root's path
 sh.echo("Adding /opt/support/bin to root's path".bold);
 (vars).toEnd('/root/.bashrc');
