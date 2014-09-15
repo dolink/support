@@ -52,8 +52,8 @@ sh.echo(ch.bold("Adding /etc/agent"));
 sh.mkdir('-p', '/etc/agent');
 
 // Set the permission of bins to executable
-sh.echo(ch.bold("Setting the permission of bins to executable"));
-var bins = sh.ls('./bin');
+sh.echo(ch.bold("Setting the permission of /opt/support/bin to executable"));
+var bins = sh.ls('/opt/support/bin');
 bins.forEach(function (bin) {
     sh.echo("   chmod u+x " + bin);
     sh.chmod('u+x', bin);
@@ -63,14 +63,14 @@ bins.forEach(function (bin) {
 sh.echo(ch.bold('Set `' + user + '` user as the owner of this directory'));
 sh.exec('chown -R ' + user + ' /opt/');
 
-var vars = 'export PATH=/opt/support/bin:$PATH\n';
+var env = 'export PATH=/opt/support/bin:$PATH\n';
 // Add /opt/support/bin to root's path
 sh.echo(ch.bold("Adding /opt/support/bin to root's path"));
-(vars).toEnd('/root/.bashrc');
+env.toEnd('/root/.bashrc');
 
 // Add /opt/support/bin to user's path
 sh.echo(ch.bold("Adding /opt/support/bin to " + user + "'s path"));
-(vars).toEnd('/home/' + user + '/.bashrc');
+env.toEnd('/home/' + user + '/.bashrc');
 
 // Set the box's environment
 sh.echo(ch.bold("Setting the box's environment to stable"));
