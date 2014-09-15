@@ -3,6 +3,7 @@
 var sh = require('shelljs');
 var ch = require('chalk');
 var read = require('read');
+var util = require('util');
 var platform = require('./lib/platform');
 var utils = require('./lib/utils');
 
@@ -17,20 +18,37 @@ try {
     process.exit(1);
 }
 
+var config = {
+    support: '/opt/support',
+    agent: '/opt/agent',
+    dmc: '/opt/dmc'
+};
+
 // clone support
 sh.echo(ch.bold('Create the Dolink Support Folder'));
 sh.rm('-fr', '/opt/support');
 sh.mkdir('-p', '/opt/support');
+sh.exec('chown -R ' + user + ' /opt/support');
 
 sh.echo(ch.bold('Fetching the Support Repo from Github'));
 sh.exec('git clone https://github.com/dolink/support.git /opt/support ');
 sh.cd('/opt/support');
 sh.exec('git checkout master');
+sh.exec('npm install');
+
+// Set the permission of bins to executable
+sh.echo(ch.bold("Setting the permission of /opt/support/bin to executable"));
+var bins = sh.ls('/opt/support/bin');
+bins.forEach(function (bin) {
+    sh.echo("   chmod u+x " + bin);
+    sh.chmod('u+x', bin);
+});
 
 // clone dobox
 sh.echo(ch.bold('Create the Dobox Directory'));
 sh.rm('-fr', '/opt/dmc');
 sh.mkdir('-p', '/opt/dmc');
+sh.exec('chown -R ' + user + ' /opt/dmc');
 
 sh.echo(ch.bold("Clone the DMC into opt"));
 sh.exec('git clone https://github.com/dolink/dmc.git /opt/dmc');
@@ -41,6 +59,7 @@ sh.exec('git checkout master');
 sh.echo(ch.bold('Create the Agent Directory'));
 sh.rm('-fr', '/opt/agent');
 sh.mkdir('-p', '/opt/agent');
+sh.exec('chown -R ' + user + ' /opt/agent');
 
 sh.echo(ch.bold("Clone the Agent into opt"));
 sh.exec('git clone https://github.com/dolink/agent.git /opt/agent');
@@ -50,14 +69,6 @@ sh.exec('git checkout master');
 // Create directory /etc/agent
 sh.echo(ch.bold("Adding /etc/agent"));
 sh.mkdir('-p', '/etc/agent');
-
-// Set the permission of bins to executable
-sh.echo(ch.bold("Setting the permission of /opt/support/bin to executable"));
-var bins = sh.ls('/opt/support/bin');
-bins.forEach(function (bin) {
-    sh.echo("   chmod u+x " + bin);
-    sh.chmod('u+x', bin);
-});
 
 // chown opt folder
 sh.echo(ch.bold('Set `' + user + '` user as the owner of this directory'));

@@ -97,22 +97,22 @@ sudo apt-get -qq -y -f -m install gpac > /dev/null;
 # Glone Setup
 ###################################################################
 
-# Create the Dolink setup folder
+# Create the Dolink support folder
 echo -e "\n→ ${bold}Create the Dolink Setup Folder in /tmp${normal}\n";
 cd /tmp
-rm -rf setup
-sudo mkdir -p  setup;
+rm -rf support
+sudo mkdir -p  support;
 
-# Clone the Ninja Utilities into ~/setup
-echo -e "\n→ ${bold}Fetching the Setup Repo from Github to /tmp/setup${normal}\n";
-git clone https://github.com/dolink/setup.git /tmp/setup > /dev/null;
-cd /tmp/setup;
+# Clone the Ninja Utilities into ~/support
+echo -e "\n→ ${bold}Fetching the Setup Repo from Github to /tmp/support${normal}\n";
+git clone https://github.com/dolink/support.git /tmp/support > /dev/null;
+cd /tmp/support;
 git checkout master; #this will change once release is finished
 
 # Install Node Packages
-echo -e "\n→ ${bold}Installing dependences of the Setup Repo${normal}\n";
+echo -e "\n→ ${bold}Installing dependences of the Support Repo${normal}\n";
 npm install
 
-# Run install.js
+# Run setup.js
 echo -e "\n→ ${bold}Setup Dobox ...${normal}\n";
 sudo node setup.js
