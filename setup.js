@@ -62,7 +62,7 @@ bins.forEach(function (bin) {
     sh.chmod('u+x', bin);
 });
 
-var vars = 'export PATH=/opt/support/bin\n';
+var vars = 'export PATH=/opt/support/bin:$PATH\n';
 // Add /opt/support/bin to root's path
 sh.echo("Adding /opt/support/bin to root's path".bold);
 (vars).toEnd('/root/.bashrc');
