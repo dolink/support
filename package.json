@@ -12,10 +12,7 @@
   "author": "Tao Yuan",
   "license": "MIT",
   "dependencies": {
-    "colors": "^0.6.2",
-    "lodash": "^2.4.1",
-    "needs": "^0.1.7",
-    "platform": "^1.2.0",
+    "chalk": "^0.5.1",
     "properties-parser": "^0.2.3",
     "read": "^1.0.5",
     "shelljs": "^0.3.0",
