@@ -30,7 +30,7 @@ sh.rm('-fr', '/opt/support');
 sh.mkdir('-p', '/opt/support');
 sh.exec('chown -R ' + user + ' /opt/support');
 
-sh.echo(ch.bold('Fetching the Support Repo from Github'));
+sh.echo(ch.bold('Fetching the `support` Repo from Github'));
 sh.exec('git clone https://github.com/dolink/support.git /opt/support ');
 sh.cd('/opt/support');
 sh.exec('git checkout master');
@@ -50,7 +50,7 @@ sh.rm('-fr', '/opt/dmc');
 sh.mkdir('-p', '/opt/dmc');
 sh.exec('chown -R ' + user + ' /opt/dmc');
 
-sh.echo(ch.bold("Clone the DMC into opt"));
+sh.echo(ch.bold("Fetching the `dmc` Repo from Github"));
 sh.exec('git clone https://github.com/dolink/dmc.git /opt/dmc');
 sh.cd('/opt/dmc');
 sh.exec('git checkout master');
@@ -61,7 +61,7 @@ sh.rm('-fr', '/opt/agent');
 sh.mkdir('-p', '/opt/agent');
 sh.exec('chown -R ' + user + ' /opt/agent');
 
-sh.echo(ch.bold("Clone the Agent into opt"));
+sh.echo(ch.bold("Fetching the `agent` Repo from Github"));
 sh.exec('git clone https://github.com/dolink/agent.git /opt/agent');
 sh.cd('/opt/agent');
 sh.exec('git checkout master');
