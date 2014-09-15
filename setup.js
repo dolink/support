@@ -25,15 +25,17 @@ var config = {
 };
 
 // clone support
-sh.echo(ch.bold('Create the Dolink Support Folder'));
+sh.echo(ch.bold('Create the `support` Support Folder'));
 sh.rm('-fr', '/opt/support');
 sh.mkdir('-p', '/opt/support');
 sh.exec('chown -R ' + user + ' /opt/support');
 
-sh.echo(ch.bold('Fetching the `support` Repo from Github'));
+sh.echo(ch.bold('Fetching the `support` repo from Github'));
 sh.exec('git clone https://github.com/dolink/support.git /opt/support ');
 sh.cd('/opt/support');
 sh.exec('git checkout master');
+
+sh.echo("   Installing the `support` repo dependencies");
 sh.exec('npm install');
 
 // Set the permission of bins to executable
@@ -44,27 +46,33 @@ bins.forEach(function (bin) {
     sh.chmod('u+x', bin);
 });
 
-// clone dobox
-sh.echo(ch.bold('Create the Dobox Directory'));
+// clone dmc
+sh.echo(ch.bold('Create the `dmc` Directory'));
 sh.rm('-fr', '/opt/dmc');
 sh.mkdir('-p', '/opt/dmc');
 sh.exec('chown -R ' + user + ' /opt/dmc');
 
-sh.echo(ch.bold("Fetching the `dmc` Repo from Github"));
+sh.echo(ch.bold("Fetching the `dmc` repo from Github"));
 sh.exec('git clone https://github.com/dolink/dmc.git /opt/dmc');
 sh.cd('/opt/dmc');
 sh.exec('git checkout master');
 
+sh.echo("   Installing the `dmc` repo dependencies");
+sh.exec('npm install');
+
 // clone agent
-sh.echo(ch.bold('Create the Agent Directory'));
+sh.echo(ch.bold('Create the `agent` Directory'));
 sh.rm('-fr', '/opt/agent');
 sh.mkdir('-p', '/opt/agent');
 sh.exec('chown -R ' + user + ' /opt/agent');
 
-sh.echo(ch.bold("Fetching the `agent` Repo from Github"));
+sh.echo(ch.bold("Fetching the `agent` repo from Github"));
 sh.exec('git clone https://github.com/dolink/agent.git /opt/agent');
 sh.cd('/opt/agent');
 sh.exec('git checkout master');
+
+sh.echo("   Installing the `agent` repo dependencies");
+sh.exec('bash ./bin/install.sh');
 
 // Create directory /etc/agent
 sh.echo(ch.bold("Adding /etc/agent"));
