@@ -51,15 +51,17 @@ sh.exec('git checkout master');
 sh.echo(ch.bold("Adding /etc/agent"));
 sh.mkdir('-p', '/etc/agent');
 
+// Set the permission of bins to executable
+sh.echo(ch.bold("Setting the permission of bins to executable"));
+var bins = sh.ls('./bin');
+bins.forEach(function (bin) {
+    sh.echo("   chmod u+x " + bin);
+    sh.chmod('u+x', bin);
+});
+
 // chown opt folder
 sh.echo(ch.bold('Set `' + user + '` user as the owner of this directory'));
 sh.exec('chown -R ' + user + ' /opt/');
-
-// chmod bins
-var bins = sh.ls('./bin');
-bins.forEach(function (bin) {
-    sh.chmod('u+x', bin);
-});
 
 var vars = 'export PATH=/opt/support/bin:$PATH\n';
 // Add /opt/support/bin to root's path
