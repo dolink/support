@@ -20,26 +20,10 @@ try {
     process.exit(1);
 }
 
-// Setting the owner of global node_modules to user
-sh.exec('chown -R ' + user + ' /usr/local/lib/node_modules/');
 sh.rm('-fr', '/root/tmp');
 
-// setup support
-installer.install('support');
-//sh.echo(ch.bold('Setup `support`'));
-//
-//sh.echo('   Create the `support` Support Folder');
-//sh.rm('-fr', '/opt/support');
-//sh.mkdir('-p', '/opt/support');
-////sh.exec('chown -R ' + user + ' /opt/support');
-//
-//sh.echo('   Fetching the `support` repo from Github');
-//sh.exec('git clone https://github.com/dolink/support.git /opt/support ');
-//sh.cd('/opt/support');
-//sh.exec('git checkout master');
-//
-//sh.echo("   Installing the `support` repo dependencies");
-//sh.exec('npm install');
+// Setting the owner of global node_modules to user
+sh.exec('chown -R ' + user + ' /usr/local/lib/node_modules/');
 
 // Set the permission of bins to executable
 sh.echo("   Setting the permission of /opt/support/bin to executable");
@@ -50,36 +34,8 @@ bins.forEach(function (bin) {
 });
 
 installer.install('dmc');
-// setup dmc
-//sh.echo(ch.bold('Setup `dmc`'));
-//sh.echo('   Create the `dmc` Directory');
-//sh.rm('-fr', '/opt/dmc');
-//sh.mkdir('-p', '/opt/dmc');
-////sh.exec('chown -R ' + user + ' /opt/dmc');
-//
-//sh.echo("   Fetching the `dmc` repo from Github");
-//sh.exec('git clone https://github.com/dolink/dmc.git /opt/dmc');
-//sh.cd('/opt/dmc');
-//sh.exec('git checkout master');
-//
-//sh.echo("   Installing the `dmc` repo dependencies");
-//sh.exec('npm install');
 
 installer.install('agent');
-// setup agent
-//sh.echo(ch.bold('Setup `agent`'));
-//sh.echo('   Create the `agent` Directory');
-//sh.rm('-fr', '/opt/agent');
-//sh.mkdir('-p', '/opt/agent');
-////sh.exec('chown -R ' + user + ' /opt/agent');
-//
-//sh.echo("   Fetching the `agent` repo from Github");
-//sh.exec('git clone https://github.com/dolink/agent.git /opt/agent');
-//sh.cd('/opt/agent');
-//sh.exec('git checkout master');
-//
-//sh.echo("   Installing the `agent` repo dependencies");
-//sh.exec('bash ./bin/install.sh', {silent: false});
 
 // Create directory /etc/agent
 sh.echo(ch.bold("Adding /etc/agent"));
