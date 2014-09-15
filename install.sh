@@ -115,4 +115,4 @@ npm install
 
 # Run install.js
 echo -e "\n→ ${bold}Setup Dobox ...${normal}\n";
-sudo node install.js
+sudo node setup.js
